@@ -4,14 +4,11 @@ pin_list = [1234, 5678, 1231]
 
 class Bank:
 
-    def __init__(self):
-        self.balance = 0
-
-    def menu(self):
+    def menu():
         print('''
-            1. Create Account
-            2. Login 
-            3. Exit
+1. Create Account
+2. Login 
+3. Exit
         ''')
         user_input = int(input('Enter Command: '))
         if user_input == 1:
@@ -22,13 +19,15 @@ class Bank:
             exit()
         else:
             print('Invalid Input')
+            Bank().menu()
 
-    def login_menu(self):
+    def login_menu():
         print('''
-            1. Deposit money
-            2. Withdraw money 
-            3. Logout
+1. Deposit money
+2. Withdraw money 
+3. Logout
         ''')
+        
         user_input = int(input('Enter Command: '))
         if user_input == 1:
             Bank().deposit()
@@ -41,14 +40,14 @@ class Bank:
 
     def deposit(self):
         amount = float(input("Enter amount to be Deposited: "))
-        self.balance += amount
+        Account().balance += amount
         print("\nAmount Deposited:", amount)
         Bank().login_menu()
  
     def withdraw(self):
         amount = float(input("Enter amount to be Withdrawn: "))
-        if self.balance>=amount:
-            self.balance-=amount
+        if Account().balance >= amount:
+            Account().balance -= amount
             print("\nYou Withdrew:", amount)
         else:
             print("\nInsufficient balance  ")
@@ -56,6 +55,9 @@ class Bank:
 
 
 class Account:
+
+    balance = 0
+
     def login(self):
         name_input = input('Enter you name: ')
         pin_input = int(input('Enter your pin: '))
@@ -64,19 +66,18 @@ class Account:
             i += 1
             if name_input == acc_list[i]:
                 if pin_input == pin_list[i]:
-                    print(f'Welcome back {name_input}')
+                    print(f'\nWelcome back {name_input}')
                     return Bank().login_menu()
                 else:
                     print('Your username and password did not match')
                     Account.login()
         return Bank().menu()
-        
 
     def create(self):
         name = input('\nEnter your name: ')
         while True:
             try:
-                pin = int(input('\nEnter desired pin(Only numbers allowed): '))
+                pin = int(input('\nEnter desired pin (Only numbers allowed): '))
                 break
             except:
                 print('Your pin should NOT involve any characters')
@@ -90,5 +91,4 @@ class Account:
 
 
 Bank().menu()
-
 
